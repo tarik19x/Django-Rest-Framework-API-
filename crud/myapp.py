@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "http://127.0.0.1:8000/api/"
+url = "http://127.0.0.1:8000/stucrt/"
 
 
 def get_data(id=None):
@@ -18,9 +18,9 @@ def get_data(id=None):
 
 def post_data():
     data = {
-        'name': "Rakib Uddin",
-        'roll': 108,
-        'city': "Dhaka",
+        'name': "Ali Baba",
+        'roll': 40,
+        'city': "Iran",
     }
     json_data = json.dumps(data)
     r = requests.post(url=url, data=json_data)
@@ -28,20 +28,21 @@ def post_data():
     return data
 
 
-post_data()
+# post_data()
 
 
 def update_data():
     data = {
-        'id': 6,
-        'name': "Rakib Uddin",
-        'roll': 108,
-        'city': "Dhaka",
+        'id': 2,
+        'name': "Rakib",
+        'roll': 99,
     }
     json_data = json.dumps(data)
     r = requests.put(url=url, data=json_data)
     data = r.json()
     return data
 
+
+update_data()
 
 # print(update_data())

@@ -5,15 +5,16 @@ from django.shortcuts import render
 import io
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.views import View
+from django.utils.decorators import method_decorator
 # Create your views here.
 
 
-@csrf_exempt
-def student_api(request):
-    if request.method == "GET":
+@method_decorator(csrf_exempt, name='dispatch')
+class StudentApi(View):
+    def get(self, request, *args, **kwargs):
         json_data = request.body
         stream = io.BytesIO(json_data)
         pythondata = JSONParser().parse(stream)
@@ -28,7 +29,7 @@ def student_api(request):
         json_data = JSONRenderer().render(serializer.data)
         return HttpResponse(json_data, content_type="application/json")
 
-    if request.method == "POST":
+    def post(self, request, *args, **kwargs):
         json_data = request.body
         stream = io.BytesIO(json_data)
         pythondata = JSONParser().parse(stream)
@@ -41,7 +42,7 @@ def student_api(request):
         json_data = JSONRenderer().render(serializer.errors)
         return HttpResponse(json_data, content_type="application/json")
 
-    if request.method == "PUT":
+    def put(self, request, *args, **kwargs):
         json_data = request.body
         stream = io.BytesIO(json_data)
         pythondata = JSONParser().parse(stream)
@@ -55,3 +56,13 @@ def student_api(request):
             return HttpResponse(json_data, content_type="application/json")
         json_data = JSONRenderer().render(serializer.errors)
         return HttpResponse(json_data, content_type="application/json")
+
+    def delete(self, request, *args, **kwargs):
+        json_data = request.body
+        stream = io.BytesIO(json_data)
+        python_data = JSONParser().parse(stream)
+        id = python_data.get('id')
+        stu = Student.objects.get(id=id)
+        stu.delete()
+        res = {'msg': "Data Deleted"}
+        return JsonResponse(res, safe=False)
