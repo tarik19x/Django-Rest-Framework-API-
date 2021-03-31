@@ -7,3 +7,4 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = ['id', 'name', 'city', 'roll']
         
+        
