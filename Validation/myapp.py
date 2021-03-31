@@ -34,7 +34,7 @@ print(post_data())
 def update_data():
     data = {
         'id': 2,
-        'name': "Rakib",
+        'name': "Nam nai",
         'roll': 99,
     }
     json_data = json.dumps(data)
@@ -45,4 +45,4 @@ def update_data():
 
 # update_data()
 
-# print(update_data())
+print(update_data())
